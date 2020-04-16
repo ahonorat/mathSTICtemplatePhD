@@ -1,0 +1,166 @@
+%% with the book class, it automatically starts chapters on the front side (i.e. recto) of a page
+\documentclass[twoside,12pt,a4paper]{book}
+
+%% defs.tex contains the package and the macro definitions
+\input{defs.tex}
+
+
+\logoecoledoc{couverture/logo-mathSTIC.pdf} %logo ecole doctorale
+%indicate the certification number of l'ecole doctorale
+\nbecoledoc{601}
+%Indicate the name of l'ecole doctorale
+\nomecoledoc{Math{\'e}matiques et Sciences et Technologies \\ de l'Information et de la Communication}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Modify the following macro to adapt the front matter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Indicate the domain (see list of domains in your ecole doctorale)
+\specialite{Signal, Image, Vision (par exemple)}
+%Provide the name of the institution that delivers the diploma, 
+\etablissement{l'INSA Rennes (par exemple)}
+\logoetablissement{couverture/logo-etablissements/logoINSA.pdf}%logo etablissement 
+%Attention : the first name is in lowercase and the last name (family name) is in uppercase 
+\author{John DOE}
+%Give the complete title of the thesis, if necessary on several lines
+\title{A great title}
+\asubtitle{A more humble subtitle}
+%indicates the date and the place of the defense 
+\datesoutenance{DATE}
+\lieusoutenance{PLACE}
+%Indicates the name (or names) of research laboratories where the work has been done as well as (if desired) the names of faculties (UFR, Schools, institution...
+\uniterecherche{LABO}
+%Indicate the number of the thesis if there is one.
+\numthese{00000}
+
+
+%%%%%%%%%%%%%%
+% Other config
+%%%%%%%%%%%%%%
+
+%% Bibliography files
+\addbibresource{mybib.bib}
+\addbibresource{notmybib.bib}
+
+
+%% line spacing, keep it before document section,
+%% we recommend to set it to one line and a half
+\onehalfspacing
+%%\singlespacing
+%%\doublespacing
+
+
+%%%%%%%%%%%%%%
+% The document
+%%%%%%%%%%%%%%
+
+\begin{document}
+
+
+
+
+%% frontmatter turns off numbering
+\frontmatter
+%% you will have to set the jury inside this file
+\input{couverture/pagedegarde.tex}
+  
+%% we have to set back default language since pagedegarde.tex sets it in french
+\selectlanguage{english}
+
+
+\dominitoc %% initialize minitoc to have a short toc in each chapter
+\tableofcontents
+\mtcaddchapter %% needed because minitoc has a compatibility problem with tocbibind
+
+\listoffigures
+\mtcaddchapter %% needed because minitoc has a compatibility problem with tocbibind
+
+\listoftables
+\mtcaddchapter %% needed because minitoc has a compatibility problem with tocbibind
+
+%% list of algorithms if needed
+%% \listofalgorithms
+
+
+\chapter{Introduction}
+
+This manuscript is a template.
+Read the source file to know more about it.
+
+
+%% mainmatter turns on numbering
+\mainmatter
+\chapter{Related Work}
+\label{sec:relatedWork}
+
+Did you read this Dijkstra's paper~\cite{Ref1}?
+
+
+\chapter{\LaTeX~advices}
+
+We advise you to use the following \LaTeX~packages:
+\begin{itemize}
+\item \texttt{glossaries} or \texttt{acro} to use acronyms in your document;
+\item \texttt{caption} and \texttt{subcaption} to insert subfigures;
+\item \texttt{minted} for code (requires to install \texttt{python-pygments} Linux package)
+  and \texttt{algorithm2e} for pseudo-code;
+\item \texttt{fancyhdr} to customize the page headers and \texttt{fncychap} to customize the chapter headers;
+\item \texttt{mdframed} package, to have \href{https://texblog.org/2015/09/30/fancy-boxes-for-theorem-lemma-and-proof-with-mdframed/}{beautiful boxes}.
+\end{itemize}
+
+
+
+
+Pay attention to the source code, there are examples for:
+\begin{itemize}
+\item local table of contents inside chapters (see \texttt{latinchapter/lucrece.tex} file);
+\item clever referencing (with \verb!\Cref! command);
+\item separated bibliographies (the general one, and your own publications);
+\item clickable link with the \verb!\href! command, as used above for \emph{beautiful boxes}.
+\end{itemize}
+
+Finally, a good folder organization is more efficient, such as one folder per chapter.
+
+  
+\chapter{A contribution}
+
+Did you know it took twelve years~\cite{Ref2} to Dijkstra to prove
+his self-stabilization algorithm discussed in~\Cref{sec:relatedWork}?
+%% \Cref command prefix the \ref command with the label type (as Section, Figure)
+
+Well this was our contribution, published in an international conference~\cite{Mycontrib}.
+
+
+\input{latinchapter/lucrece.tex}
+
+
+
+
+%% backmatter turns off numbering
+%% so appendix (if any) must be before!
+\backmatter
+\chapter{Conclusion}
+
+What's done is done.
+
+
+
+%% print biblio (with single linespace in any case)
+\singlespacing
+%% generic one
+\printbibliography[heading=bibintoc, notkeyword={mypaper}]
+%% print only your contributions, take care to add ``mypaper''
+%% in the list of keywords of your papers in the bib file
+\printbibliography[title={List of published contributions},heading=bibintoc,keyword={mypaper}]
+
+
+
+\cleardoublepage
+\cleartoleftpage
+\input{couverture/resume.tex}
+
+
+
+\end{document}
