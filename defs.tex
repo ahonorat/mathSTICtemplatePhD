@@ -15,12 +15,13 @@
 \usepackage{geometry} %% for the margins
 \usepackage{multicol} %% for the back matter
 \usepackage{eso-pic} %% for the bacground pictures in front and back matters
-\usepackage{tikz} %% for the placement of figures in front and back matters 
 \usepackage{minitoc} %% to have local toc in chapters, etoc package is also good, but a bit more complicated
+\usepackage{tikz} %% for the placement of figures in front and back matters 
+\usetikzlibrary{babel} %% here load more tikz libs if needed, babel is a compatibility lib for the babel package
 
 
 %% We strongly recommend to use biblatex and biber for the bibliography
-\usepackage[backend=biber,style=alphabetic,doi=false,isbn=false,hyperref=true,backref=true,maxbibnames=99]{biblatex}
+\usepackage[backend=biber,style=alphabetic,doi=false,isbn=false,hyperref=true,backref=true,maxbibnames=99,firstinits=true]{biblatex}
 \usepackage{tocbibind}
 
 

@@ -1,6 +1,7 @@
 all: main.pdf
 
-main.pdf: *.tex *.bib couverture/*.tex
+# consider all bib files and tex files from root + tex files from subfolders
+main.pdf: *.tex *.bib **/*.tex 
 #	-shell-escape is compulsory if you are using the minted LaTeX package (because it calls the pygmentize Linux package)
 	pdflatex -shell-escape main.tex
 	biber main
