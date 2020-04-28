@@ -15,13 +15,15 @@
 \usepackage{geometry} %% for the margins
 \usepackage{multicol} %% for the back matter
 \usepackage{eso-pic} %% for the bacground pictures in front and back matters
+%% \usepackahe{caption} %% highly recommended
+%% \usepackage{subcaption} %% to have subfigures
 \usepackage{minitoc} %% to have local toc in chapters, etoc package is also good, but a bit more complicated
 \usepackage{tikz} %% for the placement of figures in front and back matters 
 \usetikzlibrary{babel} %% here load more tikz libs if needed, babel is a compatibility lib for the babel package
 
 
 %% We strongly recommend to use biblatex and biber for the bibliography
-\usepackage[backend=biber,style=alphabetic,doi=false,isbn=false,hyperref=true,backref=true,maxbibnames=99,firstinits=true]{biblatex}
+\usepackage[backend=biber,style=alphabetic,doi=false,isbn=false,hyperref=true,backref=true,maxbibnames=99,giveninits=true]{biblatex}
 \usepackage{tocbibind}
 
 
@@ -142,7 +144,7 @@
         \vspace{3cm}
         {\HugeFront \textsc{Th{\`e}se de doctorat de}} \par
         \vspace{2.5cm}
-        {\large \@etablissement} \par
+        {\large\textsc \@etablissement} \par
         \vspace{0.5cm}
         {\small\textsc{{\'E}cole Doctorale \No \@nbecoledoc}} \par
         \textit{\@nomecoledoc} \par
