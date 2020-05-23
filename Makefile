@@ -15,4 +15,8 @@ frontAndBackCoversOnly.pdf: *.tex **/*.tex
 	pdflatex frontAndBackCoversOnly.tex
 
 clean: 
-	rm -f *.aux *.log *~ *.bbl *.blg *.dvi *.toc *.out *.bcf *.run.xml *.acn *.acr *.alg *.glg *.glo *.gls *.ist *.lof *.lot *.maf *.mtc* *.pdf
+	rm -f *.aux *.log *~ *.bbl *.blg *.dvi *.toc *.out *.bcf *.run.xml *.acn *.acr *.alg *.glg *.glo *.gls *.ist *.lof *.lot *.maf *.mtc*
+
+Clean: clean
+	rm -rf main.pdf frontAndBackCoversOnly.pdf
+
