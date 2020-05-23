@@ -59,13 +59,12 @@
 \begin{document}
 
 
-
-
 %% frontmatter turns off numbering
 \frontmatter
 %% you will have to set the jury inside this file
 \input{couverture/pagedegarde.tex}
-  
+
+
 %% we have to set back default language since pagedegarde.tex sets it in french
 \selectlanguage{english}
 
@@ -137,7 +136,6 @@ Well this was our contribution, published in an international conference~\cite{M
 
 
 
-
 %% backmatter turns off numbering
 %% so appendix (if any) must be before!
 \backmatter
@@ -158,6 +156,7 @@ What's done is done.
 
 
 \cleardoublepage
+%% force the resume to be on an even numbered page
 \cleartoleftpage
 \input{couverture/resume.tex}
 

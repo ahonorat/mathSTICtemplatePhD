@@ -1,4 +1,4 @@
-all: main.pdf
+all: main.pdf frontAndBackCoversOnly.pdf
 
 # consider all bib files and tex files from root + tex files from subfolders
 main.pdf: *.tex *.bib **/*.tex 
@@ -10,5 +10,9 @@ main.pdf: *.tex *.bib **/*.tex
 	pdflatex -shell-escape main.tex
 #	three compilations so that all refs are correct
 
+frontAndBackCoversOnly.pdf: *.tex **/*.tex
+	pdflatex frontAndBackCoversOnly.tex
+	pdflatex frontAndBackCoversOnly.tex
+
 clean: 
-	rm -f *.aux *.log *~ *.bbl *.blg *.dvi *.toc *.out *.bcf *.run.xml *.acn *.acr *.alg *.glg *.glo *.gls *.ist *.lof *.lot *.maf main.mtc* main.pdf
+	rm -f *.aux *.log *~ *.bbl *.blg *.dvi *.toc *.out *.bcf *.run.xml *.acn *.acr *.alg *.glg *.glo *.gls *.ist *.lof *.lot *.maf *.mtc* *.pdf

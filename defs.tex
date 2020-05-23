@@ -28,8 +28,7 @@
 
 
 %% to have pdf with clickable links
-\usepackage{hyperref}
-\hypersetup{colorlinks=true}
+\usepackage[pdfusetitle,colorlinks=true]{hyperref}
 %% to automatically prefix refs by the right label (figure, algorithm, etc.), must be called after hyperref, so at the end
 %% to use it: \Cref{lbl:alabel}
 \usepackage{cleveref}
@@ -132,7 +131,7 @@
 \clearpage
 \begin{tikzpicture}[remember picture,overlay]
 
-  %% adapted from
+  %% check if path to logo has been set, adapted from
   %% https://tex.stackexchange.com/questions/53068/how-to-check-if-a-macro-value-is-empty-or-will-not-create-text-with-plain-tex-co
   {\if\relax\@logoecoledoc\relax
   %% if empty, do nothing
@@ -160,7 +159,7 @@
 \newcommand{\HugeFront}{\fontsize{26}{31}\selectfont} % Used in 'these de doctorat' title
 \newcommand{\LargeFront}{\fontsize{16}{19}\selectfont} % Used in thesis title
 
-%% adapted from
+%% remove indentation, adapted from
 %% https://tex.stackexchange.com/questions/59245/how-to-disable-automatic-indent
 \newlength\tindent
 \setlength{\tindent}{\parindent}
