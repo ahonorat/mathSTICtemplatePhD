@@ -40,17 +40,6 @@
 %%%%%%%%%%%%%%%%%%%%%
 
 
-% Define commands to set fonts throughout the document
-\newcommand*{\selectfontfrontcover}{\fontsize{12pt}{12pt}\fontfamily{phv}\selectfont}  % Font style used in front cover 
-\newcommand*{\selectfontbackcover}{\fontsize{12pt}{12pt}\fontfamily{phv}\selectfont}   % Font style used in back cover 
-\newcommand*{\selectfontchapheads}{\fontsize{12pt}{12pt}\fontfamily{phv}\selectfont} % Font style used chapter headings
-
-
-%%%%%%%%%%%%%%%% COULEURS RGB de l'ED%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\definecolor{grisfonce}{RGB}{49,49,49}
-\definecolor{grisclair}{RGB}{111,111,111}
-\definecolor{blanc}{RGB}{255,255,255}
-\definecolor{mathSTIC-Color}{RGB}{233,90,104}
 
 %%%%%%%%%%%%%%%% TITRE THESE PAGE DE GARDE %%%%%%%%%%%%%%%%
 
@@ -113,32 +102,76 @@
 \newcommand{\lieusoutenance}[1]{\gdef\@lieusoutenance{#1}}
 \lieusoutenance{}
 
+%%%%%%%%%% FONT SIZES
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define commands to set fonts throughout the document
+\newcommand*{\selectfontfrontcover}{\fontsize{12pt}{12pt}\fontfamily{phv}\selectfont}  % Font style used in front cover 
+\newcommand*{\selectfontbackcover}{\fontsize{12pt}{12pt}\fontfamily{phv}\selectfont}   % Font style used in back cover 
+\newcommand*{\selectfontchapheads}{\fontsize{12pt}{12pt}\fontfamily{phv}\selectfont} % Font style used chapter headings
+
+
+%%%%%%%%%%%%%%%% COULEURS RGB de l'ED%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{grisfonce}{RGB}{49,49,49}
+\definecolor{grisclair}{RGB}{111,111,111}
+\definecolor{blanc}{RGB}{255,255,255}
+\definecolor{mathSTIC-Color}{RGB}{233,90,104}
+
+
+%%%%%%%%%%%%% LOGOS EN-TETES %%%%%%%%%%%%
+
+
+\newcommand{\coverheader}[1]{%
+\AddToShipoutPicture*{%
+    \put(0,0){%
+    \parbox[b][\paperheight]{\paperwidth}{%
+        \includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{#1}%
+        \vfill
+}}}
+\thispagestyle{empty}
+\clearpage
+\begin{tikzpicture}[remember picture,overlay]
+
+  %% adapted from
+  %% https://tex.stackexchange.com/questions/53068/how-to-check-if-a-macro-value-is-empty-or-will-not-create-text-with-plain-tex-co
+  {\if\relax\@logoecoledoc\relax
+  %% if empty, do nothing
+  \else
+  %% if not empty, include logo
+  \node[xshift=.1\paperwidth,yshift=0cm] {
+  \includegraphics[width=5cm]{\@logoecoledoc}
+  };
+  \fi
+  }
+  
+  \node[xshift=.6\paperwidth,yshift=0cm] {
+  \includegraphics[width=5cm]{\@logoetablissement}
+  };
+\end{tikzpicture}
+\par\nobreak
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%% PREMIERE DE COUVERTURE %%%%%%
+
 % Define some font sizes specific to the front cover
 \newcommand{\HugeFront}{\fontsize{26}{31}\selectfont} % Used in 'these de doctorat' title
 \newcommand{\LargeFront}{\fontsize{16}{19}\selectfont} % Used in thesis title
 
+%% adapted from
+%% https://tex.stackexchange.com/questions/59245/how-to-disable-automatic-indent
+\newlength\tindent
+\setlength{\tindent}{\parindent}
+
 %mise en page de la page de garde
 
 \def\maketitle{%
-  %
-  \thispagestyle{empty}
-  \clearpage
-  \begin{tikzpicture}[remember picture,overlay,line width=0mm]
-  \draw [draw=white,fill=white]
-    (current page.north west) rectangle (\paperwidth,1);
-  \node[xshift=0.04\paperwidth,yshift=2cm,text=white,font=\bf\Large] {
-  \includegraphics[width=5cm]{\@logoecoledoc}
-  };
-  \node[xshift=.6\paperwidth,yshift=2cm,text=white,font=\bf\Large] {
-  \includegraphics[width=5cm]{\@logoetablissement}
-  };
-   \node at (current page.center)
-{\parbox{17.6cm}{
 
-\selectfontfrontcover % Set font style for front cover page
+\setlength{\parindent}{0pt}
+{\selectfontfrontcover % Set font style for front cover page
+
 %% however we need sapcing env since we dont want that user settings modify the cover
 \begin{spacing}{1}
         \vspace{3cm}
@@ -155,51 +188,26 @@
         \hspace{0.6cm}{\LARGE\textbf{\@author}} \par
         \vspace{1cm}
         {\LargeFront\textbf{\@title}} \par
-        \vspace{0.5cm}
+        \vspace{0.4cm}
         {\large{\@asubtitle}} \par
-        \vspace{1cm}
+        \vspace{0.8cm}
         \small
         \textbf{Th{\`e}se pr{\'e}sent{\'e}e et soutenue {\`a} \@lieusoutenance, le \@datesoutenance} \par
 	 \textbf{Unit{\'e} de recherche : \@uniterecherche} \par
 	 \textbf{Th{\`e}se \No : \@numthese} \par
-         \vspace{1.5cm}
+         \vspace{1cm}
          \@jury
 \end{spacing}
 }
-};
-\end{tikzpicture}
+\setlength{\parindent}{\tindent}
 }
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% QUATRIEME DE COUVERTURE %%%%%%%%%%%%%%%%
-\newcommand{\backcoverheader}{%
-\AddToShipoutPicture*{%
-    \put(0,0){%
-    \parbox[b][\paperheight]{\paperwidth}{%
-        \vfill
-        \includegraphics[width=\paperwidth,height=\paperheight]{./couverture/image-fond-MATHSTIC-dos.pdf}%
-        \vfill
-}}}
-\pagestyle{empty}
-\hspace{1cm}
-\begin{tikzpicture}[remember picture,overlay,line width=0mm]
-  \draw [draw=white]
-    (current page.north west) rectangle (\paperwidth,1);
-  \node[xshift=0.03\paperwidth,yshift=2cm,text=white,font=\bf\Large] {
-  \includegraphics[width=5cm]{\@logoecoledoc}
-  };
-  \hfill
-  \node[xshift=.55\paperwidth,yshift=2cm,text=white,font=\bf\Large] {
-  \includegraphics[width=5cm]{\@logoetablissement}
-  };
-\end{tikzpicture}
-\par\nobreak
-}
-
 \newcommand{\titleFR}[1]{%
-\vspace{1cm}
+\vspace{3.3cm}
 {\centering \noindent \textcolor{mathSTIC-Color}{\rule{\textwidth}{0.2cm}}}
 \vspace{-1cm}
 \selectlanguage{french}
