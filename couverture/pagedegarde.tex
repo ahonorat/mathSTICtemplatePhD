@@ -19,11 +19,7 @@ Pr{\'e}nom NOM & Fonction et {\'e}tablissement d'exercice \\
 
 \vspace{\baselineskip}
 {\normalsize \textbf{Composition du Jury :}}\par
-{\fontsize{9.5}{11}\selectfont {\textcolor{red}{ %% to remove after defense
-\textit{Attention, en cas d’absence d’un des membres du jury le jour de la soutenance, %% to remove after defense
-la composition du jury doit être revue pour s’assurer qu’elle est conforme et devra %% to remove after defense
-{\^e}tre r{\'e}percut{\'e}e sur la couverture de th{\`e}se}}}}\par  %% to remove after defense
-%% remove the line above after the defense, and if jury members could not come, update the following table to remove them
+{\fontsize{9.5}{11}\selectfont 
 \vspace{0.25cm}
 
 \begin{tabular}{@{}lll}
@@ -44,8 +40,20 @@ Encadr. de th\`{e}se : & Pr{\'e}nom NOM & Fonction et {\'e}tablissement d'exerci
 Pr{\'e}nom NOM & Fonction et {\'e}tablissement d'exercice \\
 \end{tabular}
 }
+}
 
 \maketitle
+
+%% to remove after defense:
+{\vspace{0.5cm}
+\begin{spacing}{1}
+\selectfontfrontcover \fontsize{9.5}{11}\selectfont \textcolor{red}{ 
+\textit{Attention, en cas d’absence d’un des membres du jury le jour de la soutenance,
+la composition du jury doit être revue pour s’assurer qu’elle est conforme et devra
+{\^e}tre r{\'e}percut{\'e}e sur la couverture de th{\`e}se}}
+\end{spacing}
+}\par
+
 
 % Restore original margin settings
 \restoregeometry

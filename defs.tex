@@ -52,6 +52,16 @@
 \newcommand*{\logoetablissement}[1]{\gdef\@logoetablissement{#1}}
 \logoetablissement{}
 
+%%%% Titre en fran{\c c}ais
+\newcommand{\setTitleFR}[1]{\gdef\@titleFR{#1}}
+\setTitleFR{}
+\newcommand{\getTitleFR}{\@titleFR}
+
+%%%% Titre en anglais
+\newcommand{\setTitleEN}[1]{\gdef\@titleEN{#1}}
+\setTitleEN{}
+\newcommand{\getTitleEN}{\@titleEN}
+
 %%%% Eventuel sous-titre
 \newcommand{\asubtitle}[1]{\gdef\@asubtitle{#1}}
 \asubtitle{}
@@ -205,49 +215,38 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% QUATRIEME DE COUVERTURE %%%%%%%%%%%%%%%%
-\newcommand{\titleFR}[1]{%
+
+\newcommand{\abstractFR}[2]{%
 \vspace{3.3cm}
 {\centering \noindent \textcolor{mathSTIC-Color}{\rule{\textwidth}{0.2cm}}}
 \vspace{-1cm}
 \selectlanguage{french}
-\section*{\selectfontbackcover\small\textcolor{mathSTIC-Color}{Titre : }{\selectfontbackcover\mdseries{#1}}} % In this particular case, font style needs to get re-selected locally
-}
-
-\newcommand{\keywordsFR}[1]{%
+\section*{\selectfontbackcover\small\textcolor{mathSTIC-Color}{Titre : }{\selectfontbackcover\mdseries{\getTitleFR{}}}} % In this particular case, font style needs to get re-selected locally
 \vspace{-0.2cm}
 \noindent{ \small \textbf{Mots-cl{\'e}s : }#1}
-}
-
-\newcommand{\abstractFR}[1]{%
 \vspace{-0.2cm}
 \begin{multicols}{2}
 \begin{small}
 \begin{spacing}{1}
-	\noindent \textbf{R{\'e}sum{\'e} : }#1
+	\noindent \textbf{R{\'e}sum{\'e} : }#2
 \end{spacing}
 \end{small}
 \end{multicols}
 }
 
-\newcommand{\titleEN}[1]{%
+\newcommand{\abstractEN}[2]{%
 \vspace{0.5cm}
 {\centering \noindent \textcolor{mathSTIC-Color}{\rule{\textwidth}{0.2cm}}}
 \vspace{-1cm}
 \selectlanguage{english}
-\section*{\selectfontbackcover\small\textcolor{mathSTIC-Color}{Title: }{\selectfontbackcover\mdseries{#1}}} % In this particular case, font style needs to get re-selected locally
-}
-
-\newcommand{\keywordsEN}[1]{%
+\section*{\selectfontbackcover\small\textcolor{mathSTIC-Color}{Title: }{\selectfontbackcover\mdseries{\getTitleEN{}}}} % In this particular case, font style needs to get re-selected locally
 \vspace{-0.2cm}
-\noindent{ \small \textbf{Keywords: }#1}
-}
-
-\newcommand{\abstractEN}[1]{%
+\noindent{ \small \textbf{Keywords: }#1}\par
 \vspace{-0.2cm}
 \begin{multicols}{2}
 \begin{small}
 \begin{spacing}{1}
-	\noindent \textbf{Abstract: }#1
+	\noindent \textbf{Abstract: }#2
 \end{spacing}
 \end{small}
 \end{multicols}
