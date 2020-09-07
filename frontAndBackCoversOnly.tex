@@ -25,7 +25,9 @@
 %Attention : the first name is in lowercase and the last name (family name) is in uppercase 
 \author{John DOE}
 %Give the complete title of the thesis, if necessary on several lines
-\title{A great title}
+\setTitleFR{Titre en fran{\c c}ais}
+\setTitleEN{A great title}
+\title{\getTitleEN{}}
 \asubtitle{A more humble subtitle}
 %indicates the date and the place of the defense 
 \datesoutenance{DATE}
@@ -34,6 +36,19 @@
 \uniterecherche{LABO}
 %Indicate the number of the thesis if there is one.
 \numthese{00000}
+
+
+\AddReviewer{Pr{\'e}nom NOM}{Fonction et {\'e}tablissement d'exercice}
+\AddReviewer{Pr{\'e}nom NOM}{Fonction et {\'e}tablissement d'exercice}
+
+\AddRegularJuryMember{Pr{\'e}sident :}{{\`a} pr{\'e}ciser apr{\`e}s la soutenance}{Fonction qui prend beaucoup de place mais c'est pas grave car le retour {\`a} la ligne est automatique}
+\AddRegularJuryMember{Examinateurs :}{Pr{\'e}nom NOM}{Fonction et {\'e}tablissement d'exercice}
+\AddRegularJuryMember{}{Pr{\'e}nom NOM}{Fonction et {\'e}tablissement d'exercice}
+\AddRegularJuryMember{}{Pr{\'e}nom NOM}{Fonction et {\'e}tablissement d'exercice}
+\AddRegularJuryMember{Dir. de th\`{e}se :}{Pr{\'e}nom NOM}{Fonction et {\'e}tablissement d'exercice}
+\AddRegularJuryMember{Encadr. de th\`{e}se :}{Pr{\'e}nom NOM}{Fonction et {\'e}tablissement d'exercice}
+%% optionnel
+\AddInvitedJuryMember{Pr{\'e}nom NOM}{Fonction et {\'e}tablissement d'exercice}
 
 
 %%%%%%%%%%%%%%
