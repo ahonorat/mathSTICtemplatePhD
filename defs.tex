@@ -21,6 +21,8 @@
 \usepackage{tikz} %% for the placement of figures in front and back matters 
 \usetikzlibrary{babel} %% here load more tikz libs if needed, babel is a compatibility lib for the babel package
 \usepackage{tabularx} %% to have autoline break in front cover
+\usepackage{xparse} %% to store jury members
+\usepackage{forloop} %% to iterate over jury members
 
 
 %% We strongly recommend to use biblatex and biber for the bibliography
@@ -173,47 +175,123 @@
 \newcommand{\smalltwelve}{\fontsize{11}{12.5}\selectfont} % original 12pt \small
 
 
-%% adapted from:
+%% Data structure to store jury members
+%% https://tex.stackexchange.com/questions/215563/storing-an-array-of-strings-in-a-command
+\ExplSyntaxOn
+\NewDocumentCommand{\storedata}{mm}
+  {
+   \bcp_store_data:nn { #1 } { #2 }
+  }
+
+\NewDocumentCommand{\appenddata}{mm}
+ {
+  \bcp_append_data:nn { #1 } { #2 }
+ }
+
+\NewExpandableDocumentCommand{\getdata}{O{1}m}
+ {
+  \bcp_get_data:nn { #1 } { #2 }
+ }
+
+\NewExpandableDocumentCommand{\getlength}{m}
+ {
+  \seq_count:c { l_bcp_data_#1_seq }
+ }
+
+
+\cs_new_protected:Npn \bcp_store_data:nn #1 #2
+ {
+  % create the sequence if it doesn't exist or clear it if it exists
+  \seq_clear_new:c { l_bcp_data_#1_seq }
+  % append the items
+  \__bcp_append_data:nn { #1 } { #2 }
+ }
+
+\cs_new_protected:Npn \bcp_append_data:nn #1 #2
+ {
+  % create the sequence if it doesn't exist, do nothing if it exists
+  \seq_if_exist:cF { l_bcp_data_#1_seq }
+   { \seq_new:c { l_bcp_data_#1_seq } }
+  % append the items
+  \__bcp_append_data:nn { #1 } { #2 }
+ }
+
+\cs_new_protected:Npn \__bcp_append_data:nn #1 #2
+ {
+  % append items one at a time
+  \tl_map_inline:nn { #2 }
+   {
+    \seq_put_right:cn { l_bcp_data_#1_seq } { ##1 }
+   }
+ }
+
+\cs_new:Npn \bcp_get_data:nn #1 #2
+ {
+  % retrieve the requested item
+  \seq_item:cn { l_bcp_data_#2_seq } { #1 }
+ }
+
+
+\ExplSyntaxOff
+
+%% https://stackoverflow.com/questions/49393784/how-can-i-sum-two-numbers-in-latex-with-my-own-command
+%% https://tex.stackexchange.com/questions/258042/accessing-value-in-forloop
+\newcounter{JuryIterator}
+\newcounter{JuryLimit}
+
+%% inspired from:
 %% https://tex.stackexchange.com/questions/360031/trying-to-create-dynamic-table-and-commands-alltogether
-\gdef\@ReviewersContents{}
 \newcommand{\AddReviewer}[2]{
-\xdef\@ReviewersContents{\@ReviewersContents #1&#2\\}
+\appenddata{reviewers}{{#1&#2}}
 }
 \newcommand{\MakeReviewerTable}{
+\setcounter{JuryLimit}{\getlength{reviewers}}
+\stepcounter{JuryLimit}
 {\normaltwelve \textbf{Rapporteurs avant soutenance :}\par}
 {\JuryFontSize 
 \vspace{0.25cm}
 \begin{tabularx}{\textwidth}{@{}p{0.3\textwidth}X}
-\@ReviewersContents
+\forloop{JuryIterator}{1}{\value{JuryIterator} < \value{JuryLimit}}{
+\getdata[\arabic{JuryIterator}]{reviewers}\\
+}
 \end{tabularx} \par
 }}
 
-\gdef\@JuryMembersContents{}
 \newcommand{\AddRegularJuryMember}[3]{
-\xdef\@JuryMembersContents{\@JuryMembersContents #1&#2&#3\\}
+\appenddata{members}{{#1&#2&#3}}
 }
 \newcommand{\MakeJuryMemberTable}{
+\setcounter{JuryLimit}{\getlength{members}}
+\stepcounter{JuryLimit}
 {\normaltwelve \textbf{Composition du Jury :}\par}
 {\JuryFontSize 
 \vspace{0.25cm}
 \begin{tabularx}{\textwidth}{@{}p{0.15\textwidth}p{0.3\textwidth}X}
-\@JuryMembersContents
+\forloop{JuryIterator}{1}{\value{JuryIterator} < \value{JuryLimit}}{
+\getdata[\arabic{JuryIterator}]{members}\\
+}
 \end{tabularx} \par
-}}
+}
+}
 
-\gdef\@JuryInvitedContents{}
 \newcommand{\AddInvitedJuryMember}[2]{
-\xdef\@JuryInvitedContents{\@JuryInvitedContents #1&#2\\}
+\appenddata{invited}{{#1&#2}}
 }
 \newcommand{\MakeJuryInvitedTable}{
+\setcounter{JuryLimit}{\getlength{invited}}
+\stepcounter{JuryLimit}
+\ifnum\value{JuryLimit}>1
 {\normaltwelve \textbf{Invit{\'e}(s) :}\par}
 {\JuryFontSize 
 \vspace{0.25cm}
 \begin{tabularx}{\textwidth}{@{}p{0.3\textwidth}X}
-\@JuryInvitedContents
+\forloop{JuryIterator}{1}{\value{JuryIterator} < \value{JuryLimit}}{
+\getdata[\arabic{JuryIterator}]{invited}\\
+}
 \end{tabularx} \par
-}}
-
+}
+\fi
+}
 
 
 
@@ -231,7 +309,7 @@
 \begin{spacing}{1}
         \vspace{3cm}
         {\HugeFront \textsc{Th{\`e}se de doctorat de} \par}
-        \vspace{2cm}
+        \vspace{2.2cm}
         {\largetwelve \textsc{\@etablissement} \par}
         \vspace{0.5cm}
         {\smalltwelve \textsc{{\'E}cole Doctorale \No \@nbecoledoc} \par}
@@ -241,7 +319,7 @@
         \hspace{0.6cm}{\normaltwelve Par \par}
         \vspace{0.25cm}
         \hspace{0.6cm}{\LARGEtwelve \textbf{\@author} \par}
-        \vspace{0.8cm}
+        \vspace{0.6cm}
         {\LargeFront \textbf{\@title} \par}
         \vspace{0.4cm}
         {\largetwelve \@asubtitle \par}
@@ -251,9 +329,7 @@
 	{\smalltwelve \textbf{Th{\`e}se \No : \@numthese} \par}
         \vspace{1cm}
         \MakeReviewerTable
-        \vspace{0.6cm}
         \MakeJuryMemberTable
-        \vspace{0.6cm}
         \MakeJuryInvitedTable
 \end{spacing}
 }
