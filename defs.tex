@@ -143,18 +143,25 @@
   %% check if path to logo has been set, adapted from
   %% https://tex.stackexchange.com/questions/53068/how-to-check-if-a-macro-value-is-empty-or-will-not-create-text-with-plain-tex-co
   {\if\relax\@logoecoledoc\relax
-  %% if empty, do nothing
+      %% if empty, do nothing
   \else
-  %% if not empty, include logo
-  \node[xshift=.1\paperwidth,yshift=0cm] {
-  \includegraphics[width=5cm]{\@logoecoledoc}
-  };
+      %% if not empty, include logo
+      \node[anchor=north west, yshift=-1.5cm, xshift=1.5cm] at (current page.north west) {
+          \includegraphics[width=5cm,height=2.5cm,keepaspectratio]{\@logoecoledoc}
+      };
   \fi
   }
   
-  \node[xshift=.6\paperwidth,yshift=0cm] {
-  \includegraphics[width=5cm]{\@logoetablissement}
-  };
+  {\if\relax\@logoetablissement\relax
+      %% if empty, do nothing
+  \else
+      %% if not empty, include logo
+      \node[anchor=north east, yshift=-1.5cm, xshift=-1.5cm] at (current page.north east){
+          \includegraphics[width=5cm,height=2.5cm,keepaspectratio]{\@logoetablissement}
+      };
+  \fi
+  }
+
 \end{tikzpicture}
 \par\nobreak
 }
